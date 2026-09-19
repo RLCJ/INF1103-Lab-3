@@ -39,7 +39,7 @@ def process_stock_deliveries():
     print("\n" + "=" * 30)
     print("Daily Summary Report")
     print("=" * 30)
-    print(f"Total Deliveries: {total_inventory}")
+    print(f"Total Deliveries Processed: {total_inventory}")
     print(f"Number of Failed/Rejected Entries: {failed_entries}")
 
 
