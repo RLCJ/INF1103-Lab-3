@@ -8,7 +8,7 @@ def process_stock_deliveries():
         user_input = input("Enter stock quantity (or type 'quit' to exit): ").strip()
 
         # Handle exit condition
-        if user_input.lower() == "quit":    #allows lower case 'quit'
+        if user_input.lower() == "quit":    #allows upper case 'QUIT'
             break
 
         # 4. Handle invalid input using .isdigit()
@@ -39,7 +39,7 @@ def process_stock_deliveries():
     print("\n" + "=" * 30)
     print("Daily Summary Report")
     print("=" * 30)
-    print(f"Total Units Processed: {total_inventory}")
+    print(f"Total Deliveries: {total_inventory}")
     print(f"Number of Failed/Rejected Entries: {failed_entries}")
 
 
