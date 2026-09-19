@@ -1,53 +1,72 @@
-def process_stock_deliveries():
-    # 1. Initialize variables
+def calculate_tax(amount):
+    return amount * 0.10                                # Calculate 10% tax
+
+
+def process_delivery(current_total, new_value):     
+    return current_total + new_value                    # Calculates and returns the updated total inventory
+
+                                                    
+def get_valid_input():
+    user_input = input("Enter stock quantity (or type 'quit' to exit): ").strip()
+
+    if user_input.lower() == "quit":
+        return "quit"
+
+    # Input validation using .isdigit()
+    if not user_input.isdigit():
+        if user_input.startswith("-") and user_input[1:].isdigit():
+            print("Error: Stock quantity cannot be negative. Please try again.")
+        else:
+            print("Error: Invalid entry. Please enter a positive whole number.")
+        return None
+
+    return int(user_input)
+
+
+def generate_report(total_units, failed_attempts):
+    print("\n" + "=" * 30)
+    print("DELIVERY SUMMARY")
+    print("=" * 30)
+    print(f"Total Deliveries Processed: {total_units}")
+    print(f"Number of Failed/Rejected Entries: {failed_attempts}")          # Prints the final summary report
+
+
+def main():
     total_inventory = 0
     failed_entries = 0
+    total_tax_collected = 0.0                                               # Initialize inventory and counters to zero
 
-def calculate_tax(total_sales):
-    tax_rate = 0.08
-    tax_amount = total_sales * tax_rate
 
-def generate_report(total_inventory, failed_entries):
-    print("\n" + "=" * 30)
-    print("Daily Summary Report")
-    print("=" * 30)
-    print(f"Total Deliveries Processed: {total_inventory}")
-    print(f"Number of Failed/Rejected Entries: {failed_entries}")
-
-    # 2. Run in a continuous loop
+    # 2. Continuous loop
     while True:
-        user_input = input("Enter stock quantity (or type 'quit' to exit): ").strip()
+        delivery_amount = get_valid_input()
 
-        # Handle exit condition
-        if user_input.lower() == "quit":    #allows upper case 'QUIT'
+        # Handle exit signal
+        if delivery_amount == "quit":
             break
 
-        # 4. Handle invalid input using .isdigit()
-        if not user_input.isdigit():        #returns False if the string contains any non-digit characters, including negative signs or decimal points
-            if user_input.startswith("-") and user_input[1:].isdigit():     #checks if the input is a negative number
-
-                # 5. Enforce business rule: Reject negative numbers
-                print("Stock quantity cannot be negative. Please enter a positive whole number.")
-            else:
-                print("Error: Invalid entry. Please enter a positive whole number.")
-
+        # Handle invalid inputs
+        if delivery_amount is None:
             failed_entries += 1
-            continue  # Move to the next iteration
+            continue
 
-        # 3. Accept stock values as integers
-        quantity = int(user_input)
+        # 3. Handle valid delivery
+        total_inventory = process_delivery(total_inventory, delivery_amount)
+        delivery_tax = calculate_tax(delivery_amount)
+        total_tax_collected += delivery_tax
 
-        # 6. Manage State: Keep a running total
-        total_inventory += quantity
-        print(f"Accepted: +{quantity} units. Current Total: {total_inventory}")
+        print(f"Accepted: +{delivery_amount} units | Tax (10%): ${delivery_tax:.2f} | Current Total: {total_inventory}")
+        # displays 2 decimal places for tax collected
 
-        # 7. Trigger Overstock Alert (> 500 units)
+
+        # Overstock Check
         if total_inventory > 500:
-            print("OVERSTOCK ALERT: Total inventory has exceeded 500 units!")
+            print("\n*** OVERSTOCK ALERT: Total inventory has exceeded 500 units! ***")
+            print("Stopping stock delivery processing immediately.")
             break
 
+    generate_report(total_inventory, failed_entries)
 
 
 if __name__ == "__main__":
-    process_stock_deliveries();
-    
+    main()
