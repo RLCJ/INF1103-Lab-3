@@ -3,6 +3,17 @@ def process_stock_deliveries():
     total_inventory = 0
     failed_entries = 0
 
+def calculate_tax(total_sales):
+    tax_rate = 0.08
+    tax_amount = total_sales * tax_rate
+
+def generate_report(total_inventory, failed_entries):
+    print("\n" + "=" * 30)
+    print("Daily Summary Report")
+    print("=" * 30)
+    print(f"Total Deliveries Processed: {total_inventory}")
+    print(f"Number of Failed/Rejected Entries: {failed_entries}")
+
     # 2. Run in a continuous loop
     while True:
         user_input = input("Enter stock quantity (or type 'quit' to exit): ").strip()
@@ -35,13 +46,8 @@ def process_stock_deliveries():
             print("OVERSTOCK ALERT: Total inventory has exceeded 500 units!")
             break
 
-    # 8. Reporting
-    print("\n" + "=" * 30)
-    print("Daily Summary Report")
-    print("=" * 30)
-    print(f"Total Deliveries Processed: {total_inventory}")
-    print(f"Number of Failed/Rejected Entries: {failed_entries}")
 
 
 if __name__ == "__main__":
     process_stock_deliveries();
+    
