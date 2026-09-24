@@ -1,12 +1,13 @@
 def calculate_tax(amount):
-    return amount * 0.10                                # Calculate 10% tax
+    tax = amount * 0.10
+    return tax                                          # Calculate 10% tax
 
 
 def process_delivery(current_total, new_value):     
     return current_total + new_value                    # Calculates and returns the updated total inventory
 
                                                     
-def get_valid_input():
+def get_valid_input():                                  # Handle user input and validate it
     user_input = input("Enter stock quantity (or type 'quit' to exit): ").strip()
 
     if user_input.lower() == "quit":
@@ -58,12 +59,6 @@ def main():
         print(f"Accepted: +{delivery_amount} units | Tax (10%): ${delivery_tax:.2f} | Current Total: {total_inventory}")
         # displays 2 decimal places for tax collected
 
-
-        # Overstock Check
-        if total_inventory > 500:
-            print("\n*** OVERSTOCK ALERT: Total inventory has exceeded 500 units! ***")
-            print("Stopping stock delivery processing immediately.")
-            break
 
     generate_report(total_inventory, failed_entries)
 
